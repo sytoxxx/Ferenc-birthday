@@ -47,6 +47,8 @@ create policy voices_insert_public
   to anon, authenticated
   with check (true);
 
+grant select, insert on table public.voices to anon, authenticated;
+
 create table if not exists public.reactions (
   id uuid primary key default gen_random_uuid(),
   name text not null,

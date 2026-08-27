@@ -2,8 +2,16 @@ import { createClient } from '@supabase/supabase-js'
 
 let client = null
 
+function normalizeSupabaseUrl(raw) {
+  let url = String(raw || '').trim()
+  url = url.replace(/\/+$/, '')
+  url = url.replace(/\/(rest|auth|storage|realtime)\/v1$/i, '')
+  url = url.replace(/\/+$/, '')
+  return url
+}
+
 function readPublicConfig() {
-  const url = String(import.meta.env.VITE_SUPABASE_URL || '').trim()
+  const url = normalizeSupabaseUrl(import.meta.env.VITE_SUPABASE_URL)
   // Dashboard "publishable" and classic "anon" keys are the same public browser key.
   const publishableKey = String(
     import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY || '',
