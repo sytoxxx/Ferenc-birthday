@@ -1,0 +1,65 @@
+:root {
+  --bg: #050505;
+  --bg-elevated: #121212;
+  --bg-panel: #1a1a1a;
+  --line: rgba(232, 213, 176, 0.14);
+  --gold: #c4a574;
+  --gold-bright: #e8d5b0;
+  --cream: #f4eee4;
+  --champagne: #e6d5b8;
+  --ivory: #f7f4ee;
+  --muted: #8e8a84;
+  --muted-red: #8a555c;
+  --muted-blue: #5c6a7a;
+  --lavender: #7a6e86;
+  --danger: #c98989;
+  --font:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial,
+    sans-serif;
+  --radius: 16px;
+  --radius-pill: 980px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration: 0.42s;
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --keyboard-inset: 0px;
+  --page-pad-x: clamp(1.15rem, 5.2vw, 1.5rem);
+  --page-pad-top: clamp(0.75rem, 2.2vh, 1.05rem);
+  --page-pad-bottom: clamp(1rem, 2.8vh, 1.35rem);
+  --space: var(--page-pad-x);
+  --content-gap: 0.95rem;
+  --section-gap: 1.25rem;
+  --card-gap: 0.65rem;
+  --content-max: 26.5rem;
+  --content: var(--content-max);
+
+  --header-pad-top: 0.45rem;
+  --header-pad-bottom: 0.35rem;
+  --header-cluster: 2.05rem;
+  --header-height: calc(
+    var(--header-pad-top) + var(--header-cluster) + var(--header-pad-bottom) + var(--safe-top)
+  );
+
+  --nav-bar-height: 2.9rem;
+  --nav-vertical-pad: 0.22rem;
+  --nav-inset: 0.5rem;
+  --nav-gap-bottom: calc(var(--nav-inset) + var(--safe-bottom));
+  --nav-height: calc(
+    var(--nav-bar-height) + (2 * var(--nav-vertical-pad)) + var(--nav-gap-bottom)
+  );
+  --nav-offset: var(--nav-height);
+
+  --step-0: clamp(0.95rem, 0.9rem + 0.3vw, 1.05rem);
+  --step-1: clamp(1.05rem, 0.98rem + 0.45vw, 1.2rem);
+  --step-2: clamp(1.5rem, 1.12rem + 1.7vw, 2rem);
+  --step-3: clamp(2.05rem, 1.15rem + 4vw, 3.2rem);
+  --step-age: clamp(4rem, 16vw, 6.4rem);
+  --step-intro-age: clamp(4.6rem, 22vw, 7.6rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration: 0.01s;
+  }
+}
