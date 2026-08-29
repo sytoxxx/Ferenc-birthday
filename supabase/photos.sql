@@ -16,7 +16,7 @@ create index if not exists photos_created_at_idx on public.photos (created_at de
 alter table public.photos enable row level security;
 
 -- The publishable key is used in the browser until owner Auth exists.
--- Tighten these policies when Ferenc's owner session is a real Supabase Auth user.
+-- Tighten these policies when Hanna's owner session is a real Supabase Auth user.
 drop policy if exists photos_select_public on public.photos;
 create policy photos_select_public
   on public.photos

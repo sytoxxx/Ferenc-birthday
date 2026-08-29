@@ -271,7 +271,7 @@ export function renderAdmin({ i18n, router }) {
         const photos = uniqueByKey([...todayPhotos.photos, ...capsulePhotos.photos])
         const messages = uniqueByKey([...todayMessages.messages, ...capsuleMessages.messages])
         const voices = uniqueByKey([...todayVoices.voices, ...capsuleVoices.voices])
-        const ferencPhotos = photos.filter((item) => item.withFerenc)
+        const challengePhotos = photos.filter((item) => item.withFerenc)
         const ranks = rankPhotos(photos)
         const voteCounts = tallyVotes(votes.votes || [])
         const voteTotal = Object.values(voteCounts).reduce((sum, n) => sum + n, 0)
@@ -286,7 +286,7 @@ export function renderAdmin({ i18n, router }) {
         )
 
         challenge.replaceChildren(
-          adminCard('📸', i18n.t('admin.challengePhotos'), ferencPhotos.length),
+          adminCard('📸', i18n.t('admin.challengePhotos'), challengePhotos.length),
           adminCard('🏆', i18n.t('admin.ranking'), lead ? `${lead.name} · ${lead.count}` : '—'),
           adminCard('🗳️', i18n.t('admin.votes'), voteTotal),
         )

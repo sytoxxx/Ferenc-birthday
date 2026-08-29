@@ -20,7 +20,7 @@ create index if not exists messages_created_at_idx on public.messages (created_a
 alter table public.messages enable row level security;
 
 -- The publishable key is used in the browser until owner Auth exists.
--- Tighten these policies when Ferenc's owner session is a real Supabase Auth user.
+-- Tighten these policies when Hanna's owner session is a real Supabase Auth user.
 drop policy if exists messages_select_public on public.messages;
 create policy messages_select_public
   on public.messages

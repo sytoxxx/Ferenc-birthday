@@ -1,8 +1,8 @@
-export const HONOREE_NAME = 'Ferenc'
+export const HONOREE_NAME = 'Hanna'
 
 export const APP_CONFIG = {
-  age: 22,
-  birthdayIso: '2026-08-27',
+  age: 17,
+  birthdayIso: '2026-08-31',
   ownerSessionMs: 30 * 24 * 60 * 60 * 1000,
   maxPhotoBytes: 8 * 1024 * 1024,
   maxVoiceSeconds: 30,
@@ -14,8 +14,8 @@ export const APP_CONFIG = {
   voiceBucket: 'voices',
   voiceTable: 'voices',
   /**
-   * Ferenc can open Zeitkapsel content after this instant.
+   * Hanna can open Zeitkapsel content after this instant.
    * Change this ISO timestamp if the reveal should happen earlier or later.
    */
-  capsuleUnlockAt: '2026-08-27T22:00:00+02:00',
+  capsuleUnlockAt: '2026-08-31T22:00:00+02:00',
 }

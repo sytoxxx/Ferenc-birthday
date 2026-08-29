@@ -1,5 +1,4 @@
 import { HONOREE_NAME } from './config.js'
-import { getOwnerAuthState } from './owner-auth.js'
 import { createLocalId } from '../lib/id.js'
 import { readJson, removeItem, writeJson, writeString, readString } from '../lib/storage.js'
 
@@ -7,10 +6,16 @@ export const PARTICIPANT_STORAGE_KEY = 'participant'
 export const ROLE_STORAGE_KEY = 'role'
 export const GIFT_OPENED_KEY = 'giftOpened'
 
+const LEGACY_OWNER_KEYS = ['owner.session', 'owner.pinVerifier', 'owner.gateSession']
+
 export const ROLES = {
   guest: 'guest',
   participant: 'participant',
   owner: 'owner',
+}
+
+function clearLegacyOwnerAuth() {
+  LEGACY_OWNER_KEYS.forEach((key) => removeItem(key))
 }
 
 function isValidStoredParticipant(value) {
@@ -41,9 +46,10 @@ function ownerParticipantFromStore(storedParticipant) {
 }
 
 export function createSession() {
+  clearLegacyOwnerAuth()
+
   const storedParticipant = readJson(PARTICIPANT_STORAGE_KEY)
   const storedRole = readString(ROLE_STORAGE_KEY)
-  const ownerAuth = getOwnerAuthState()
 
   let participant = isValidStoredParticipant(storedParticipant)
     ? {
@@ -55,16 +61,11 @@ export function createSession() {
   let role = ROLES.guest
   let giftOpened = readString(GIFT_OPENED_KEY) === '1'
 
-  if (ownerAuth.status === 'authenticated') {
+  if (storedRole === ROLES.owner) {
     participant = ownerParticipantFromStore(participant)
     role = ROLES.owner
     writeJson(PARTICIPANT_STORAGE_KEY, participant)
     writeString(ROLE_STORAGE_KEY, ROLES.owner)
-  } else if (storedRole === ROLES.owner) {
-    participant = null
-    role = ROLES.guest
-    removeItem(ROLE_STORAGE_KEY)
-    removeItem(PARTICIPANT_STORAGE_KEY)
   } else if (storedRole === ROLES.participant && participant) {
     role = ROLES.participant
   }
@@ -112,6 +113,7 @@ export function createSession() {
       removeItem(PARTICIPANT_STORAGE_KEY)
       removeItem(ROLE_STORAGE_KEY)
       removeItem(GIFT_OPENED_KEY)
+      clearLegacyOwnerAuth()
     },
   }
 }

@@ -1,6 +1,6 @@
 import { el } from '../lib/dom.js'
 import { ROUTES } from '../app/router.js'
-import { getOwnerAuthState, OWNER_AUTH_STATUS } from '../app/owner-auth.js'
+import { buildOwnerParticipant } from '../app/participant.js'
 import { prefersReducedMotion } from '../lib/motion.js'
 import { applyIntroSequence } from '../ui/intro.js'
 import { createChoiceCard } from '../ui/button.js'
@@ -27,13 +27,11 @@ function markIntroDone() {
   }
 }
 
-function goToOwner({ router }) {
-  const auth = getOwnerAuthState()
-  if (auth.status === OWNER_AUTH_STATUS.authenticated) {
-    router.navigate(ROUTES.gift)
-    return
+function goToOwner({ session, router, i18n }) {
+  if (!session.isOwner()) {
+    session.becomeOwner(buildOwnerParticipant(i18n.getLocale()))
   }
-  router.navigate(ROUTES.owner)
+  router.navigate(ROUTES.gift)
 }
 
 function goToParticipant({ session, router }) {
@@ -114,8 +112,7 @@ function renderWelcomeBack({ i18n, router }) {
 }
 
 export function renderLanding(ctx) {
-  const auth = getOwnerAuthState()
-  if (auth.status === OWNER_AUTH_STATUS.authenticated) {
+  if (ctx.session.isOwner()) {
     return renderWelcomeBack(ctx)
   }
 

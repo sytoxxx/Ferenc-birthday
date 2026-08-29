@@ -29,7 +29,7 @@ export function isSupabaseConfigured() {
  * Browser-safe Supabase client.
  * Uses only the public URL and publishable/anon key.
  * Never import a service_role or secret key in frontend code.
- * Shared by photos, messages, and owner auth.
+ * Shared by photos, messages, and the rest of the app.
  */
 export function getSupabaseClient() {
   if (client) {

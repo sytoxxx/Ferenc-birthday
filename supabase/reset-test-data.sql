@@ -3,7 +3,7 @@
 --   - Supabase project configuration
 --   - database schema, tables, policies, or buckets
 --   - admin access (there is no server admin account)
---   - Ferenc Gift configuration or application files
+--   - Hanna Gift configuration or application files
 --   - participants (left intact; uncomment below only if you also want a people reset)
 --
 -- Run in the Supabase SQL editor after confirming in /admin.

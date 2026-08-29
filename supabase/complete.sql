@@ -37,7 +37,7 @@ create policy voices_select_public
   to anon, authenticated
   using (
     coalesce(destination, 'today') <> 'capsule'
-    or now() >= timestamptz '2026-08-27 22:00:00+02'
+    or now() >= timestamptz '2026-08-31 22:00:00+02'
   );
 
 drop policy if exists voices_insert_public on public.voices;
@@ -96,7 +96,7 @@ create policy photo_votes_insert_public
   to anon, authenticated
   with check (true);
 
--- Hide capsule photos/messages until 22:00 on 27.08.2026 (Europe/Berlin).
+-- Hide capsule photos/messages until 22:00 on 31.08.2026 (Europe/Berlin).
 drop policy if exists photos_select_public on public.photos;
 create policy photos_select_public
   on public.photos
@@ -104,7 +104,7 @@ create policy photos_select_public
   to anon, authenticated
   using (
     coalesce(destination, 'today') <> 'capsule'
-    or now() >= timestamptz '2026-08-27 22:00:00+02'
+    or now() >= timestamptz '2026-08-31 22:00:00+02'
   );
 
 drop policy if exists messages_select_public on public.messages;
@@ -114,7 +114,7 @@ create policy messages_select_public
   to anon, authenticated
   using (
     coalesce(destination, 'today') <> 'capsule'
-    or now() >= timestamptz '2026-08-27 22:00:00+02'
+    or now() >= timestamptz '2026-08-31 22:00:00+02'
   );
 
 do $$

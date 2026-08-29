@@ -1,6 +1,5 @@
 import { el } from '../lib/dom.js'
 import { ROUTES } from '../app/router.js'
-import { clearOwnerSession } from '../app/owner-auth.js'
 import { createLanguageSwitcher } from './language-switcher.js'
 import { createMainNav } from './nav.js'
 import { createButton } from './button.js'
@@ -31,7 +30,6 @@ export function createShell({ i18n, session, router, currentPath, showNav, cinem
         variant: 'ghost',
         className: 'app-header__identity-action',
         onClick: () => {
-          clearOwnerSession()
           session.clearIdentity()
           router.navigate(ROUTES.landing)
         },

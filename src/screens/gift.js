@@ -52,9 +52,6 @@ function renderReveal({ i18n, session }) {
     el('p', { className: 'eyebrow eyebrow--reveal', textContent: i18n.t('brand.name') }),
     el('p', { className: 'age-display', textContent: i18n.t('brand.age') }),
     el('h1', { className: 'reveal-wish', textContent: reveal.wish }),
-    el('p', { className: 'reveal-message', textContent: reveal.message }),
-    el('p', { className: 'reveal-signoff', textContent: reveal.signOff }),
-    el('p', { className: 'reveal-note', textContent: reveal.note }),
   ])
 }
 

@@ -1,13 +1,12 @@
 import { readString, writeString } from '../lib/storage.js'
 import de from './de.js'
-import hu from './hu.js'
 import en from './en.js'
 
-export const SUPPORTED_LOCALES = ['de', 'hu', 'en']
+export const SUPPORTED_LOCALES = ['de', 'en']
 export const DEFAULT_LOCALE = 'de'
 export const LOCALE_STORAGE_KEY = 'locale'
 
-const dictionaries = { de, hu, en }
+const dictionaries = { de, en }
 
 function normalizeLocaleTag(tag) {
   if (!tag || typeof tag !== 'string') return ''
@@ -23,7 +22,7 @@ export function isSupportedLocale(locale) {
 }
 
 /**
- * Maps browser locales such as de-AT, de-DE, hu-HU, en-US, en-GB
+ * Maps browser locales such as de-AT, de-DE, en-US, en-GB
  * onto the supported languages. Unsupported languages fall back to German.
  */
 export function detectBrowserLocale() {
@@ -68,7 +67,11 @@ function interpolate(template, vars) {
 
 export function createI18n() {
   const saved = readString(LOCALE_STORAGE_KEY)
-  let locale = isSupportedLocale(saved) ? saved : detectBrowserLocale()
+  if (saved === 'hu') {
+    writeString(LOCALE_STORAGE_KEY, DEFAULT_LOCALE)
+  }
+  const normalizedSaved = saved === 'hu' ? DEFAULT_LOCALE : saved
+  let locale = isSupportedLocale(normalizedSaved) ? normalizedSaved : detectBrowserLocale()
   const listeners = new Set()
 
   const applyDocumentLanguage = () => {

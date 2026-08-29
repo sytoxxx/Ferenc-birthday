@@ -14,8 +14,6 @@ import { renderNotFound } from '../screens/not-found.js'
 import { createI18n } from '../i18n/index.js'
 import { createSession } from './session.js'
 import { createRouter } from './router.js'
-import { getOwnerAuthState, OWNER_AUTH_STATUS } from './owner-auth.js'
-import { buildOwnerParticipant } from './participant.js'
 import { toUserMessage } from '../lib/errors.js'
 import { el } from '../lib/dom.js'
 import { createButton } from '../ui/button.js'
@@ -57,22 +55,11 @@ function resolveScreen(path, ctx) {
   }
 }
 
-function adoptOwner(session, i18n) {
-  const auth = getOwnerAuthState()
-  if (auth.status === OWNER_AUTH_STATUS.authenticated && !session.isOwner()) {
-    session.becomeOwner(buildOwnerParticipant(i18n.getLocale()))
-  }
-}
-
 function resolveRedirect(path, session) {
-  const auth = getOwnerAuthState()
-
-  if (path === ROUTES.setup || path === ROUTES.unlock) {
-    return ROUTES.owner
-  }
-
-  if (path === ROUTES.owner && auth.status === OWNER_AUTH_STATUS.authenticated) {
-    return ROUTES.gift
+  if (path === ROUTES.setup || path === ROUTES.unlock || path === ROUTES.owner) {
+    if (session.isOwner()) return ROUTES.gift
+    if (session.isParticipant()) return ROUTES.today
+    return ROUTES.landing
   }
 
   if (path === ROUTES.landing && session.isParticipant() && !session.isOwner()) {
@@ -81,10 +68,6 @@ function resolveRedirect(path, session) {
 
   if (path === ROUTES.join && session.getParticipant()) {
     return session.isOwner() ? ROUTES.gift : ROUTES.today
-  }
-
-  if (path === ROUTES.owner && session.isParticipant() && !session.isOwner()) {
-    return ROUTES.today
   }
 
   if (path === ROUTES.photo) {
@@ -130,7 +113,6 @@ function renderFatalError(root, i18n, error) {
 
 export function renderApp(root, ctx) {
   const { session, router, i18n } = ctx
-  adoptOwner(session, i18n)
 
   const path = router.getPath()
   const redirect = resolveRedirect(path, session)

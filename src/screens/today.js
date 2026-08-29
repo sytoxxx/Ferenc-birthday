@@ -3,7 +3,6 @@ import { ROUTES } from '../app/router.js'
 import { loadMergedPhotos, listLocalPhotos, subscribePhotoInserts } from '../app/photos.js'
 import { loadMergedMessages, listLocalMessages, subscribeMessageInserts } from '../app/messages.js'
 import { loadMergedVoices, listLocalVoices, subscribeVoiceInserts } from '../app/voices.js'
-import { clearOwnerSession } from '../app/owner-auth.js'
 import { createComposer } from '../ui/composer.js'
 import { createAudioCard, createMessageCard, createTimeline } from '../ui/memory.js'
 import { prependPhoto, renderPhotoWall } from '../ui/photo-wall.js'
@@ -189,7 +188,6 @@ export function renderToday({ i18n, session, router }) {
   subscribeVoiceInserts(addVoice)
 
   const changeIdentity = () => {
-    clearOwnerSession()
     session.clearIdentity()
     router.navigate(ROUTES.landing)
   }
